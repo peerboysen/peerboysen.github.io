@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Peer Boysen – VFX & Compositing</title>
+  <title>Peer Boysen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -53,32 +53,36 @@
       opacity: 0.85;
     }
 
-    /* Buttons */
-    .button {
+    /* Controls (Play + Sound) mittig unten */
+    .controls {
       position: absolute;
-      top: 20px;
-      right: 20px;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
       z-index: 3;
-      padding: 10px 16px;
-      margin-left: 10px;
-      background: rgba(255,255,255,0.2);
+    }
+
+    .button {
+      background: rgba(255,255,255,0.3); /* 30% opacity */
       color: white;
-      border: 1px solid white;
-      border-radius: 4px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
       cursor: pointer;
-      font-size: 14px;
-      backdrop-filter: blur(5px);
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
     }
 
-    .sound-btn {
-      right: 20px;
+    .button:hover {
+      background: rgba(255,255,255,0.5);
     }
 
-    .play-btn {
-      right: 120px;
-    }
-
-    /* Mobile */
+    /* Mobile Anpassung */
     @media (max-width: 768px) {
       .content {
         top: 20px;
@@ -93,13 +97,14 @@
         font-size: 12px;
       }
 
-      .button {
-        padding: 8px 12px;
-        font-size: 12px;
+      .controls {
+        bottom: 20px;
       }
 
-      .play-btn {
-        right: 100px;
+      .button {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
       }
     }
   </style>
@@ -122,9 +127,11 @@
     <p>VFX & Compositing Artist</p>
   </div>
 
-  <!-- Buttons -->
-  <div class="button play-btn" id="playBtn">Pause</div>
-  <div class="button sound-btn" id="soundBtn">Sound an</div>
+  <!-- Controls -->
+  <div class="controls">
+    <div class="button play-btn" id="playBtn">⏯️</div>
+    <div class="button sound-btn" id="soundBtn">🔈</div>
+  </div>
 
   <!-- Vimeo Player API -->
   <script src="https://player.vimeo.com/api/player.js"></script>
@@ -138,43 +145,31 @@
     let muted = true;
     let playing = true;
 
-    <script>
-  const iframe = document.getElementById('vimeo-player');
-  const player = new Vimeo.Player(iframe);
+    // Sound Button
+    soundBtn.addEventListener('click', () => {
+      if (muted) {
+        player.setVolume(1);
+        muted = false;
+        soundBtn.innerText = "🔊";
+      } else {
+        player.setVolume(0);
+        muted = true;
+        soundBtn.innerText = "🔈";
+      }
+    });
 
-  const playBtn = document.getElementById('playBtn');
-  const soundBtn = document.getElementById('soundBtn');
-
-  let muted = true;
-  let playing = true;
-
-  // Sound Button
-  soundBtn.addEventListener('click', () => {
-    if (muted) {
-      player.setVolume(1);
-      muted = false;
-      soundBtn.innerText = "🔊";
-    } else {
-      player.setVolume(0);
-      muted = true;
-      soundBtn.innerText = "🔈";
-    }
-  });
-
-  // Play / Pause Button
-  playBtn.addEventListener('click', () => {
-    if (playing) {
-      player.pause();
-      playing = false;
-      playBtn.innerText = "▶️";
-    } else {
-      player.play();
-      playing = true;
-      playBtn.innerText = "⏸️";
-    }
-  });
-</script>
-
+    // Play / Pause Button
+    playBtn.addEventListener('click', () => {
+      if (playing) {
+        player.pause();
+        playing = false;
+        playBtn.innerText = "▶️";
+      } else {
+        player.play();
+        playing = true;
+        playBtn.innerText = "⏸️";
+      }
+    });
   </script>
 
 </body>
