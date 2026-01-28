@@ -64,32 +64,25 @@
       z-index: 3;
     }
 
-    /* Play Button minimalistisch grau */
+    /* Play Button schwarz/weiß */
     .button {
       background: transparent;
       border: none;
-      color: #aaa;
-      cursor: pointer;
+      color: white; /* schwarz/weiß Look, passt zu allem */
       font-size: 28px;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    /* Lautstärke Slider - standardmäßig unsichtbar */
+    /* Lautstärke Slider - standardmäßig sichtbar */
     .volume-control {
       display: flex;
       align-items: center;
       gap: 6px;
       font-size: 24px;
-      color: #aaa;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-
-    .volume-control.show {
-      opacity: 1;
+      color: white;
       pointer-events: auto;
     }
 
@@ -97,7 +90,7 @@
       -webkit-appearance: none;
       width: 100px;
       height: 4px;
-      background: rgba(170,170,170,0.5);
+      background: rgba(255,255,255,0.5);
       border-radius: 2px;
       cursor: pointer;
     }
@@ -106,7 +99,7 @@
       -webkit-appearance: none;
       width: 14px;
       height: 14px;
-      background: #aaa;
+      background: white;
       border-radius: 50%;
       cursor: pointer;
     }
@@ -114,7 +107,7 @@
     .volume-control input[type=range]::-moz-range-thumb {
       width: 14px;
       height: 14px;
-      background: #aaa;
+      background: white;
       border-radius: 50%;
       cursor: pointer;
     }
@@ -144,11 +137,6 @@
         font-size: 24px;
       }
 
-      .volume-control {
-        opacity: 1;          /* Mobile: immer sichtbar für Touch */
-        pointer-events: auto; /* Slider klickbar */
-      }
-
       .volume-control input[type=range] {
         width: 80px;
       }
@@ -162,7 +150,7 @@
   <div class="video-bg">
     <iframe
       id="vimeo-player"
-      src="https://player.vimeo.com/video/946210855?fl=pl&fe=sh&autoplay=1&muted=1&loop=1&background=1"
+      src="https://player.vimeo.com/video/946210855?fl=pl&fe=sh&autoplay=1&muted=0&loop=1&background=1"
       allow="autoplay; fullscreen">
     </iframe>
   </div>
@@ -175,10 +163,10 @@
 
   <!-- Controls oben rechts -->
   <div class="controls">
-    <div class="button play-btn" id="playBtn">⏯️</div>
-    <div class="volume-control" id="volumeControl">
-      <span id="volumeIcon">🔈</span>
-      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0">
+    <div class="button play-btn" id="playBtn">⏸️</div>
+    <div class="volume-control">
+      <span id="volumeIcon">🔊</span>
+      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
     </div>
   </div>
 
@@ -189,14 +177,13 @@
     const player = new Vimeo.Player(iframe);
 
     const playBtn = document.getElementById('playBtn');
-    const volumeControl = document.getElementById('volumeControl');
     const volumeIcon = document.getElementById('volumeIcon');
     const volumeSlider = document.getElementById('volumeSlider');
 
     let playing = true;
 
-    // initial stumm
-    player.setVolume(0);
+    // initial auf volle Lautstärke
+    player.setVolume(1);
 
     // Play / Pause Button
     playBtn.addEventListener('click', () => {
@@ -210,13 +197,6 @@
         playBtn.innerText = "⏸️";
       }
     });
-
-    // Klick auf Audio-Icon → Slider sichtbar / versteckt (nur Desktop)
-    if(window.innerWidth > 768){
-      volumeIcon.addEventListener('click', () => {
-        volumeControl.classList.toggle('show');
-      });
-    }
 
     // Lautstärke Slider
     volumeSlider.addEventListener('input', () => {
