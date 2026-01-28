@@ -39,6 +39,7 @@
       left: 40px;
       z-index: 2;
       color: white;
+      line-height: 1.4;
     }
 
     h1 {
@@ -47,10 +48,11 @@
       font-weight: 500;
     }
 
-    p {
+    p, .extra-info {
       margin: 6px 0 0;
       font-size: 14px;
       opacity: 0.85;
+      white-space: pre-line; /* damit Zeilenumbrüche übernommen werden */
     }
 
     /* Buttons oben rechts */
@@ -87,7 +89,7 @@
         font-size: 24px;
       }
 
-      p {
+      p, .extra-info {
         font-size: 12px;
       }
 
@@ -118,6 +120,12 @@
   <div class="content">
     <h1>Peer Boysen</h1>
     <p>VFX & Compositing Artist</p>
+    <p class="extra-info">
+Nuke on-site and remote
+peerboysen@mailbox.org
++49 (0) 171 490 27 89
+Schwenckestraße 10, 20257 Hamburg
+    </p>
   </div>
 
   <!-- Buttons -->
