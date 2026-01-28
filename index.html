@@ -65,10 +65,11 @@
       z-index: 3;
     }
 
-    /* Play Button minimalistisch */
+    /* Play Button minimalistisch grau */
     .button {
       background: transparent;
       border: none;
+      color: #aaa; /* neutral grau */
       cursor: pointer;
       font-size: 32px;
       display: flex;
@@ -76,28 +77,20 @@
       justify-content: center;
     }
 
-    /* Lautstärke Slider - standardmäßig versteckt */
+    /* Lautstärke Slider grau */
     .volume-control {
       display: flex;
       align-items: center;
       gap: 8px;
       font-size: 28px;
-      color: white;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-
-    .volume-control.show {
-      opacity: 1;
-      pointer-events: auto;
+      color: #aaa;
     }
 
     .volume-control input[type=range] {
       -webkit-appearance: none;
       width: 120px;
       height: 4px;
-      background: rgba(255,255,255,0.3);
+      background: rgba(170,170,170,0.5);
       border-radius: 2px;
       cursor: pointer;
     }
@@ -106,7 +99,7 @@
       -webkit-appearance: none;
       width: 14px;
       height: 14px;
-      background: white;
+      background: #aaa;
       border-radius: 50%;
       cursor: pointer;
     }
@@ -114,7 +107,7 @@
     .volume-control input[type=range]::-moz-range-thumb {
       width: 14px;
       height: 14px;
-      background: white;
+      background: #aaa;
       border-radius: 50%;
       cursor: pointer;
     }
@@ -170,7 +163,7 @@
   <!-- Controls -->
   <div class="controls">
     <div class="button play-btn" id="playBtn">⏯️</div>
-    <div class="volume-control" id="volumeControl">
+    <div class="volume-control">
       <span id="volumeIcon">🔈</span>
       <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0">
     </div>
@@ -183,7 +176,6 @@
     const player = new Vimeo.Player(iframe);
 
     const playBtn = document.getElementById('playBtn');
-    const volumeControl = document.getElementById('volumeControl');
     const volumeIcon = document.getElementById('volumeIcon');
     const volumeSlider = document.getElementById('volumeSlider');
 
@@ -203,11 +195,6 @@
         playing = true;
         playBtn.innerText = "⏸️";
       }
-    });
-
-    // Klick auf Audio-Icon → Slider toggle sichtbar/unsichtbar
-    volumeIcon.addEventListener('click', () => {
-      volumeControl.classList.toggle('show');
     });
 
     // Lautstärke Slider
