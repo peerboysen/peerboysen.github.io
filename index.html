@@ -175,32 +175,6 @@
   });
 </script>
 
-
-    // Sound Button
-    soundBtn.addEventListener('click', () => {
-      if (muted) {
-        player.setVolume(1);
-        muted = false;
-        soundBtn.innerText = "Sound aus";
-      } else {
-        player.setVolume(0);
-        muted = true;
-        soundBtn.innerText = "Sound an";
-      }
-    });
-
-    // Play / Pause Button
-    playBtn.addEventListener('click', () => {
-      if (playing) {
-        player.pause();
-        playing = false;
-        playBtn.innerText = "Play";
-      } else {
-        player.play();
-        playing = true;
-        playBtn.innerText = "Pause";
-      }
-    });
   </script>
 
 </body>
