@@ -104,16 +104,16 @@
 
     .volume-control input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
       background: #aaa;
       border-radius: 50%;
       cursor: pointer;
     }
 
     .volume-control input[type=range]::-moz-range-thumb {
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
       background: #aaa;
       border-radius: 50%;
       cursor: pointer;
@@ -144,6 +144,11 @@
         font-size: 24px;
       }
 
+      .volume-control {
+        opacity: 1;          /* Mobile: immer sichtbar für Touch */
+        pointer-events: auto; /* Slider klickbar */
+      }
+
       .volume-control input[type=range] {
         width: 80px;
       }
@@ -164,3 +169,67 @@
 
   <!-- Text Overlay -->
   <div class="content">
+    <h1>Peer Boysen</h1>
+    <p>VFX & Compositing Artist</p>
+  </div>
+
+  <!-- Controls oben rechts -->
+  <div class="controls">
+    <div class="button play-btn" id="playBtn">⏯️</div>
+    <div class="volume-control" id="volumeControl">
+      <span id="volumeIcon">🔈</span>
+      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0">
+    </div>
+  </div>
+
+  <!-- Vimeo Player API -->
+  <script src="https://player.vimeo.com/api/player.js"></script>
+  <script>
+    const iframe = document.getElementById('vimeo-player');
+    const player = new Vimeo.Player(iframe);
+
+    const playBtn = document.getElementById('playBtn');
+    const volumeControl = document.getElementById('volumeControl');
+    const volumeIcon = document.getElementById('volumeIcon');
+    const volumeSlider = document.getElementById('volumeSlider');
+
+    let playing = true;
+
+    // initial stumm
+    player.setVolume(0);
+
+    // Play / Pause Button
+    playBtn.addEventListener('click', () => {
+      if (playing) {
+        player.pause();
+        playing = false;
+        playBtn.innerText = "▶️";
+      } else {
+        player.play();
+        playing = true;
+        playBtn.innerText = "⏸️";
+      }
+    });
+
+    // Klick auf Audio-Icon → Slider sichtbar / versteckt (nur Desktop)
+    if(window.innerWidth > 768){
+      volumeIcon.addEventListener('click', () => {
+        volumeControl.classList.toggle('show');
+      });
+    }
+
+    // Lautstärke Slider
+    volumeSlider.addEventListener('input', () => {
+      const volume = parseFloat(volumeSlider.value);
+      player.setVolume(volume);
+
+      if(volume == 0) {
+        volumeIcon.innerText = "🔈";
+      } else {
+        volumeIcon.innerText = "🔊";
+      }
+    });
+  </script>
+
+</body>
+</html>
