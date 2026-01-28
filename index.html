@@ -138,6 +138,44 @@
     let muted = true;
     let playing = true;
 
+    <script>
+  const iframe = document.getElementById('vimeo-player');
+  const player = new Vimeo.Player(iframe);
+
+  const playBtn = document.getElementById('playBtn');
+  const soundBtn = document.getElementById('soundBtn');
+
+  let muted = true;
+  let playing = true;
+
+  // Sound Button
+  soundBtn.addEventListener('click', () => {
+    if (muted) {
+      player.setVolume(1);
+      muted = false;
+      soundBtn.innerText = "🔊";
+    } else {
+      player.setVolume(0);
+      muted = true;
+      soundBtn.innerText = "🔈";
+    }
+  });
+
+  // Play / Pause Button
+  playBtn.addEventListener('click', () => {
+    if (playing) {
+      player.pause();
+      playing = false;
+      playBtn.innerText = "▶️";
+    } else {
+      player.play();
+      playing = true;
+      playBtn.innerText = "⏸️";
+    }
+  });
+</script>
+
+
     // Sound Button
     soundBtn.addEventListener('click', () => {
       if (muted) {
