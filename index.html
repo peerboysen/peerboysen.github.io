@@ -101,3 +101,69 @@
       .play-btn {
         right: 100px;
       }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Vimeo Background -->
+  <div class="video-bg">
+    <iframe
+      id="vimeo-player"
+      src="https://player.vimeo.com/video/946210855?fl=pl&fe=sh&autoplay=1&muted=1&loop=1&background=1"
+      allow="autoplay; fullscreen">
+    </iframe>
+  </div>
+
+  <!-- Text Overlay -->
+  <div class="content">
+    <h1>Peer Boysen</h1>
+    <p>VFX & Compositing Artist</p>
+  </div>
+
+  <!-- Buttons -->
+  <div class="button play-btn" id="playBtn">Pause</div>
+  <div class="button sound-btn" id="soundBtn">Sound an</div>
+
+  <!-- Vimeo Player API -->
+  <script src="https://player.vimeo.com/api/player.js"></script>
+  <script>
+    const iframe = document.getElementById('vimeo-player');
+    const player = new Vimeo.Player(iframe);
+
+    const playBtn = document.getElementById('playBtn');
+    const soundBtn = document.getElementById('soundBtn');
+
+    let muted = true;
+    let playing = true;
+
+    // Sound Button
+    soundBtn.addEventListener('click', () => {
+      if (muted) {
+        player.setVolume(1);
+        muted = false;
+        soundBtn.innerText = "Sound aus";
+      } else {
+        player.setVolume(0);
+        muted = true;
+        soundBtn.innerText = "Sound an";
+      }
+    });
+
+    // Play / Pause Button
+    playBtn.addEventListener('click', () => {
+      if (playing) {
+        player.pause();
+        playing = false;
+        playBtn.innerText = "Play";
+      } else {
+        player.play();
+        playing = true;
+        playBtn.innerText = "Pause";
+      }
+    });
+  </script>
+
+</body>
+</html>
