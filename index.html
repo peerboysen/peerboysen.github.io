@@ -53,7 +53,7 @@
       opacity: 0.85;
     }
 
-    /* Controls (Play + Lautstärke) mittig unten */
+    /* Controls mittig unten */
     .controls {
       position: absolute;
       bottom: 40px;
@@ -67,8 +67,8 @@
 
     /* Play Button minimalistisch */
     .button {
-      background: transparent;  /* keine Farbe */
-      border: none;             /* keine Umrandung */
+      background: transparent;
+      border: none;
       cursor: pointer;
       font-size: 32px;
       display: flex;
@@ -76,13 +76,21 @@
       justify-content: center;
     }
 
-    /* Lautstärke Slider */
+    /* Lautstärke Slider - standardmäßig versteckt */
     .volume-control {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 28px; /* Lautsprecher-Icon */
+      font-size: 28px;
       color: white;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .volume-control.show {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     .volume-control input[type=range] {
@@ -162,7 +170,7 @@
   <!-- Controls -->
   <div class="controls">
     <div class="button play-btn" id="playBtn">⏯️</div>
-    <div class="volume-control">
+    <div class="volume-control" id="volumeControl">
       <span id="volumeIcon">🔈</span>
       <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0">
     </div>
@@ -175,8 +183,9 @@
     const player = new Vimeo.Player(iframe);
 
     const playBtn = document.getElementById('playBtn');
-    const volumeSlider = document.getElementById('volumeSlider');
+    const volumeControl = document.getElementById('volumeControl');
     const volumeIcon = document.getElementById('volumeIcon');
+    const volumeSlider = document.getElementById('volumeSlider');
 
     let playing = true;
 
@@ -196,12 +205,16 @@
       }
     });
 
+    // Klick auf Audio-Icon → Slider toggle sichtbar/unsichtbar
+    volumeIcon.addEventListener('click', () => {
+      volumeControl.classList.toggle('show');
+    });
+
     // Lautstärke Slider
     volumeSlider.addEventListener('input', () => {
       const volume = parseFloat(volumeSlider.value);
       player.setVolume(volume);
 
-      // Icon wechseln
       if(volume == 0) {
         volumeIcon.innerText = "🔈";
       } else {
