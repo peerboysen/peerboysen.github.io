@@ -37,6 +37,14 @@ body {
   border: none;
 }
 
+/* Scroll Trigger Overlay */
+.scroll-trigger {
+  position: absolute;
+  inset: 0;
+  z-index: 1; /* über Video, unter Text & Controls */
+  cursor: pointer;
+}
+
 /* Text Overlay */
 .content {
   position: absolute;
@@ -48,7 +56,7 @@ body {
 }
 
 h1 {
-  margin: 0 0 2px 0; /* unten nur 2px Abstand */
+  margin: 0 0 2px 0;
   font-size: 32px;
   font-weight: 500;
 }
@@ -60,16 +68,17 @@ p, .extra-info {
   white-space: pre-line;
 }
 
-/* Video Caption unter Video (Section 1) */
+/* Video Caption */
 .video-caption {
   position: absolute;
   bottom: 40px;
   left: 30px;
-  z-index: 2;
+  z-index: 5;
   color: white;
   font-size: 18px;
   opacity: 1;
   line-height: 1.3;
+  cursor: pointer;
 }
 
 /* Controls */
@@ -95,11 +104,7 @@ p, .extra-info {
 
 /* Mobile */
 @media (max-width: 768px) {
-  .content {
-    top: 20px;
-    left: 20px;
-  }
-
+  .content { top: 20px; left: 20px; }
   h1 { font-size: 24px; }
   p, .extra-info { font-size: 12px; }
 
@@ -128,18 +133,20 @@ p, .extra-info {
     allow="autoplay; fullscreen">
   </iframe>
 
+  <!-- Scroll Trigger -->
+  <div class="scroll-trigger"></div>
+
   <div class="content">
     <h1>Peer Boysen</h1>
     <p>VFX & Compositing Artist</p>
     <p class="extra-info">
 Nuke on-site and remote - contact / 
-peerboysen@mailbox.org / mobil +49 (0) 171 490 27 89 / Schwenckestraße 10, 20257 Hamburg      
+peerboysen@mailbox.org / mobil +49 (0) 171 490 27 89 / Schwenckestraße 10, 20257 Hamburg
     </p>
   </div>
 
-  <!-- Neue Caption unter Video -->
-  <div class="video-caption">
-  STUDIO : INFECTED.DIGITAL - AUDI STORYTELLER
+  <div class="video-caption" data-link="https://infected.digital">
+    STUDIO : INFECTED.DIGITAL – AUDI STORYTELLER
   </div>
 
   <div class="controls">
@@ -154,14 +161,17 @@ peerboysen@mailbox.org / mobil +49 (0) 171 490 27 89 / Schwenckestraße 10, 2025
 
   <iframe
     data-video
-    src="https://player.vimeo.com/video/1047096683?fl=pl&fe=sh?autoplay=1&muted=1&loop=1&background=1"
+    src="https://player.vimeo.com/video/1047096683?autoplay=1&muted=1&loop=1&background=1"
     allow="autoplay; fullscreen">
   </iframe>
 
-  <!-- Neue Caption unter Video -->
-  <div class="video-caption">
-   STUDIO : SEHSUCHT - EY SHAPE THE FUTURE
+  <!-- Scroll Trigger -->
+  <div class="scroll-trigger"></div>
+
+  <div class="video-caption" data-link="https://sehsucht.de">
+    STUDIO : SEHSUCHT – EY SHAPE THE FUTURE
   </div>
+
   <div class="controls">
     <div class="button play">Pause</div>
     <div class="button sound">Sound an</div>
@@ -174,6 +184,7 @@ peerboysen@mailbox.org / mobil +49 (0) 171 490 27 89 / Schwenckestraße 10, 2025
 const sections = document.querySelectorAll('.section');
 const players = [];
 
+/* Vimeo Player Setup */
 sections.forEach(section => {
   const iframe = section.querySelector('iframe');
   const player = new Vimeo.Player(iframe);
@@ -187,31 +198,21 @@ sections.forEach(section => {
   player.setVolume(0);
 
   playBtn.onclick = () => {
-    if (playing) {
-      player.pause();
-      playBtn.innerText = "Play";
-    } else {
-      player.play();
-      playBtn.innerText = "Pause";
-    }
+    playing ? player.pause() : player.play();
+    playBtn.innerText = playing ? "Play" : "Pause";
     playing = !playing;
   };
 
   soundBtn.onclick = () => {
-    if (muted) {
-      player.setVolume(1);
-      soundBtn.innerText = "Sound aus";
-    } else {
-      player.setVolume(0);
-      soundBtn.innerText = "Sound an";
-    }
+    player.setVolume(muted ? 1 : 0);
+    soundBtn.innerText = muted ? "Sound aus" : "Sound an";
     muted = !muted;
   };
 
   players.push({ section, player });
 });
 
-/* Scroll Detection */
+/* Scroll Snap Video Control */
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     const item = players.find(p => p.section === entry.target);
@@ -227,6 +228,24 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.6 });
 
 players.forEach(p => observer.observe(p.section));
+
+/* Auto Scroll on Tap / Click */
+const sectionsArr = Array.from(sections);
+document.querySelectorAll('.scroll-trigger').forEach((trigger, index) => {
+  trigger.addEventListener('click', () => {
+    const next = sectionsArr[index + 1];
+    if (next) next.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* Caption Link Click */
+document.querySelectorAll('.video-caption').forEach(caption => {
+  caption.addEventListener('click', e => {
+    e.stopPropagation();
+    const link = caption.dataset.link;
+    if (link) window.open(link, '_blank');
+  });
+});
 </script>
 
 </body>
