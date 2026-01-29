@@ -12,14 +12,14 @@ html, body {
   height: 100%;
   background: #000;
   font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
 }
 
 body {
-  overflow-y: scroll;
   scroll-snap-type: y mandatory;
 }
 
-/* Fullscreen Sections */
+/* ================= SECTIONS ================= */
 .section {
   position: relative;
   width: 100vw;
@@ -28,24 +28,17 @@ body {
   overflow: hidden;
 }
 
-/* Vimeo Background */
+/* ================= VIMEO VIDEO ================= */
 .section iframe {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   border: none;
+  pointer-events: none; /* 🔴 verhindert Hand-Cursor */
 }
 
-/* Scroll Trigger Overlay */
-.scroll-trigger {
-  position: absolute;
-  inset: 0;
-  z-index: 1; /* über Video, unter Text & Controls */
-  cursor: pointer;
-}
-
-/* Text Overlay */
+/* ================= TEXT ================= */
 .content {
   position: absolute;
   top: 20px;
@@ -68,20 +61,24 @@ p, .extra-info {
   white-space: pre-line;
 }
 
-/* Video Caption */
+/* ================= VIDEO CAPTION ================= */
 .video-caption {
   position: absolute;
   bottom: 40px;
   left: 30px;
-  z-index: 5;
+  z-index: 6;
   color: white;
   font-size: 18px;
-  opacity: 1;
   line-height: 1.3;
-  cursor: pointer;
+  cursor: pointer; /* ✅ Finger nur hier */
+  text-decoration: none;
 }
 
-/* Controls */
+.video-caption:hover {
+  opacity: 0.7;
+}
+
+/* ================= CONTROLS ================= */
 .controls {
   position: absolute;
   top: 20px;
@@ -102,20 +99,15 @@ p, .extra-info {
   backdrop-filter: blur(5px);
 }
 
-/* Mobile */
+/* ================= MOBILE ================= */
 @media (max-width: 768px) {
-  .content { top: 20px; left: 20px; }
+  body { overflow-y: auto; }
+
   h1 { font-size: 24px; }
   p, .extra-info { font-size: 12px; }
 
-  .button {
-    padding: 8px 12px;
-    font-size: 12px;
-  }
-
   .video-caption {
     bottom: 20px;
-    left: 20px;
     font-size: 11px;
   }
 }
@@ -124,7 +116,7 @@ p, .extra-info {
 
 <body>
 
-<!-- ================= SECTION 1 ================= -->
+<!-- ========== SECTION 1 ========== -->
 <section class="section">
 
   <iframe
@@ -133,141 +125,17 @@ p, .extra-info {
     allow="autoplay; fullscreen">
   </iframe>
 
-  <!-- Scroll Trigger -->
-  <div class="scroll-trigger"></div>
-
   <div class="content">
     <h1>Peer Boysen</h1>
     <p>VFX & Compositing Artist</p>
     <p class="extra-info">
-Nuke on-site and remote - contact / 
-peerboysen@mailbox.org / mobil +49 (0) 171 490 27 89 / Schwenckestraße 10, 20257 Hamburg
+Nuke on-site and remote – contact /
+peerboysen@mailbox.org / +49 (0) 171 490 27 89 / Hamburg
     </p>
   </div>
 
-  <div class="video-caption" data-link="https://infected.digital">
+  <a class="video-caption" href="https://infected.digital" target="_blank">
     STUDIO : INFECTED.DIGITAL – AUDI STORYTELLER
-  </div>
+  </a>
 
   <div class="controls">
-    <div class="button play">Pause</div>
-    <div class="button sound">Sound an</div>
-  </div>
-
-</section>
-
-<!-- ================= SECTION 2 ================= -->
-<section class="section">
-
-  <iframe
-    data-video
-    src="https://player.vimeo.com/video/1047096683?autoplay=1&muted=1&loop=1&background=1"
-    allow="autoplay; fullscreen">
-  </iframe>
-
-  <!-- Scroll Trigger -->
-  <div class="scroll-trigger"></div>
-
-  <div class="video-caption" data-link="https://sehsucht.de">
-    STUDIO : SEHSUCHT – EY SHAPE THE FUTURE
-  </div>
-
-  <div class="controls">
-    <div class="button play">Pause</div>
-    <div class="button sound">Sound an</div>
-  </div>
-
-</section>
-
-<script src="https://player.vimeo.com/api/player.js"></script>
-<script>
-const sections = document.querySelectorAll('.section');
-const players = [];
-
-/* Vimeo Player Setup */
-sections.forEach(section => {
-  const iframe = section.querySelector('iframe');
-  const player = new Vimeo.Player(iframe);
-
-  const playBtn = section.querySelector('.play');
-  const soundBtn = section.querySelector('.sound');
-
-  let muted = true;
-  let playing = true;
-
-  player.setVolume(0);
-
-  playBtn.onclick = () => {
-    playing ? player.pause() : player.play();
-    playBtn.innerText = playing ? "Play" : "Pause";
-    playing = !playing;
-  };
-
-  soundBtn.onclick = () => {
-    player.setVolume(muted ? 1 : 0);
-    soundBtn.innerText = muted ? "Sound aus" : "Sound an";
-    muted = !muted;
-  };
-
-  players.push({ section, player });
-});
-
-/* Scroll Snap Video Control */
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    const item = players.find(p => p.section === entry.target);
-    if (!item) return;
-
-    if (entry.isIntersecting) {
-      item.player.play();
-    } else {
-      item.player.pause();
-      item.player.setVolume(0);
-    }
-  });
-}, { threshold: 0.6 });
-
-players.forEach(p => observer.observe(p.section));
-
-<script>
-let isScrolling = false;
-let currentSection = 0;
-const sectionsArr = Array.from(document.querySelectorAll('.section'));
-
-window.addEventListener('wheel', e => {
-  if (isScrolling) return;
-
-  isScrolling = true;
-
-  if (e.deltaY > 0) {
-    // Scroll DOWN
-    currentSection = Math.min(currentSection + 1, sectionsArr.length - 1);
-  } else {
-    // Scroll UP
-    currentSection = Math.max(currentSection - 1, 0);
-  }
-
-  sectionsArr[currentSection].scrollIntoView({
-    behavior: 'smooth'
-  });
-
-  // Cooldown (verhindert Overscroll)
-  setTimeout(() => {
-    isScrolling = false;
-  }, 900);
-}, { passive: true });
-</script>
-
-
-/* Caption Link Click */
-document.querySelectorAll('.video-caption').forEach(caption => {
-  caption.addEventListener('click', e => {
-    e.stopPropagation();
-    const link = caption.dataset.link;
-    if (link) window.open(link, '_blank');
-  });
-});
-</script>
-
-</body>
-</html>
