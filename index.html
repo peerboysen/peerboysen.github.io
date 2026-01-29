@@ -19,7 +19,8 @@ body {
   scroll-snap-type: y mandatory;
 }
 
-/* Fullscreen Sections */
+/* ================= SECTIONS ================= */
+
 .section {
   position: relative;
   width: 100vw;
@@ -28,24 +29,25 @@ body {
   overflow: hidden;
 }
 
-/* Vimeo Background */
+/* Vimeo Video */
 .section iframe {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   border: none;
-  cursor: default; /* ❌ kein Finger */
+  pointer-events: none; /* verhindert Finger-Cursor */
 }
 
-/* Text Overlay */
+/* ================= TEXT ================= */
+
 .content {
   position: absolute;
   top: 20px;
   left: 30px;
   z-index: 5;
   color: white;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 h1 {
@@ -61,23 +63,25 @@ p, .extra-info {
   white-space: pre-line;
 }
 
-/* Video Caption */
+/* ================= VIDEO CAPTION ================= */
+
 .video-caption {
   position: absolute;
   bottom: 40px;
   left: 30px;
-  z-index: 4;
+  z-index: 5;
   color: white;
   font-size: 18px;
   line-height: 1.3;
-  cursor: pointer; /* ✅ Finger nur hier */
+  cursor: pointer;
 }
 
 .video-caption:hover {
-  opacity: 0.7;
+  text-decoration: underline;
 }
 
-/* Controls */
+/* ================= CONTROLS ================= */
+
 .controls {
   position: absolute;
   top: 20px;
@@ -95,20 +99,24 @@ p, .extra-info {
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
+  backdrop-filter: blur(5px);
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  body {
-    overflow-y: auto;
-  }
+/* ================= MOBILE ================= */
 
+@media (max-width: 768px) {
   .content {
+    top: 20px;
     left: 20px;
   }
 
   h1 { font-size: 24px; }
   p, .extra-info { font-size: 12px; }
+
+  .button {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
 
   .video-caption {
     bottom: 20px;
@@ -122,6 +130,7 @@ p, .extra-info {
 <body>
 
 <!-- ================= SECTION 1 ================= -->
+
 <section class="section">
 
   <iframe
@@ -141,8 +150,8 @@ Schwenckestraße 10, 20257 Hamburg
   </div>
 
   <div class="video-caption"
-       onclick="window.open('https://infected.digital', '_blank')">
-    STUDIO: INFECTED.DIGITAL – AUDI STORYTELLER
+       onclick="window.open('https://infected.digital','_blank')">
+    STUDIO : INFECTED.DIGITAL – AUDI STORYTELLER
   </div>
 
   <div class="controls">
@@ -153,6 +162,7 @@ Schwenckestraße 10, 20257 Hamburg
 </section>
 
 <!-- ================= SECTION 2 ================= -->
+
 <section class="section">
 
   <iframe
@@ -162,8 +172,8 @@ Schwenckestraße 10, 20257 Hamburg
   </iframe>
 
   <div class="video-caption"
-       onclick="window.open('https://sehsucht.de', '_blank')">
-    STUDIO: SEHSUCHT – EY SHAPE THE FUTURE
+       onclick="window.open('https://www.sehsucht.de','_blank')">
+    STUDIO : SEHSUCHT – EY SHAPE THE FUTURE
   </div>
 
   <div class="controls">
@@ -173,7 +183,10 @@ Schwenckestraße 10, 20257 Hamburg
 
 </section>
 
+<!-- ================= SCRIPTS ================= -->
+
 <script src="https://player.vimeo.com/api/player.js"></script>
+
 <script>
 /* ================= VIDEO CONTROLS ================= */
 
@@ -207,7 +220,7 @@ sections.forEach(section => {
   players.push({ section, player });
 });
 
-/* ================= INTERSECTION OBSERVER ================= */
+/* ================= AUTOPAUSE ON SCROLL ================= */
 
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -225,18 +238,25 @@ const observer = new IntersectionObserver(entries => {
 
 players.forEach(p => observer.observe(p.section));
 
-/* ================= MOUSE WHEEL SMOOTH SCROLL ================= */
+/* ================= SAFE SMOOTH WHEEL SCROLL ================= */
 
 let currentIndex = 0;
-let isScrolling = false;
+let isSnapping = false;
 
 window.addEventListener('wheel', (e) => {
+
+  /* Mobile untouched */
   if (window.innerWidth <= 768) return;
 
-  e.preventDefault();
-  if (isScrolling) return;
+  /* Middle click scroll erlauben */
+  if (e.buttons === 4) return;
 
-  isScrolling = true;
+  /* Trackpad micro scroll ignorieren */
+  if (Math.abs(e.deltaY) < 40) return;
+
+  if (isSnapping) return;
+
+  isSnapping = true;
 
   if (e.deltaY > 0) {
     currentIndex = Math.min(currentIndex + 1, sections.length - 1);
@@ -244,10 +264,16 @@ window.addEventListener('wheel', (e) => {
     currentIndex = Math.max(currentIndex - 1, 0);
   }
 
-  sections[currentIndex].scrollIntoView({ behavior: 'smooth' });
+  sections[currentIndex].scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
 
-  setTimeout(() => isScrolling = false, 900);
-}, { passive: false });
+  setTimeout(() => {
+    isSnapping = false;
+  }, 800);
+
+}, { passive: true });
 </script>
 
 </body>
