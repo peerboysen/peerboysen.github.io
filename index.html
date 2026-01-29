@@ -5,18 +5,12 @@
 <title>Peer Boysen – VFX & Compositing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Text Overlay -->
-  <div class="content">
-    <h1>Peer Boysen</h1>
-    <p>VFX & Compositing Artist</p>
-    <p class="extra-info">
-
 <style>
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: black;
+  background: #000;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -28,17 +22,16 @@ body {
 /* Fullscreen Sections */
 .section {
   position: relative;
-  height: 100vh;
   width: 100vw;
+  height: 100vh;
   scroll-snap-align: start;
   overflow: hidden;
 }
 
-/* Vimeo iframe */
+/* Vimeo Background */
 .section iframe {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   border: none;
@@ -51,6 +44,7 @@ body {
   left: 40px;
   z-index: 5;
   color: white;
+  line-height: 1.4;
 }
 
 h1 {
@@ -59,10 +53,11 @@ h1 {
   font-weight: 500;
 }
 
-p {
+p, .extra-info {
   margin: 6px 0 0;
   font-size: 14px;
   opacity: 0.85;
+  white-space: pre-line;
 }
 
 /* Controls */
@@ -92,16 +87,23 @@ p {
     top: 20px;
     left: 20px;
   }
+
   h1 { font-size: 24px; }
-  p { font-size: 12px; }
+  p, .extra-info { font-size: 12px; }
+
+  .button {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- SECTION 1 -->
+<!-- ================= SECTION 1 ================= -->
 <section class="section">
+
   <iframe
     data-video
     src="https://player.vimeo.com/video/946210855?autoplay=1&muted=1&loop=1&background=1"
@@ -111,36 +113,41 @@ p {
   <div class="content">
     <h1>Peer Boysen</h1>
     <p>VFX & Compositing Artist</p>
+    <p class="extra-info">
+Nuke on-site and remote as an independent
+lets talk –
+peerboysen@mailbox.org
++49 (0) 171 490 27 89
+Schwenckestraße 10, 20257 Hamburg
+    </p>
   </div>
 
-    <div class="content">
-    <h2>Infected</h2>
-    <p>Audi - Storyteller</p>
-  </div>
-  
   <div class="controls">
     <div class="button play">Pause</div>
     <div class="button sound">Sound an</div>
   </div>
+
 </section>
 
-<!-- SECTION 2 -->
+<!-- ================= SECTION 2 ================= -->
 <section class="section">
+
   <iframe
     data-video
-    src="https://player.vimeo.com/video/1047096683?fl=pl&fe=sh?autoplay=1&muted=1&loop=1&background=1"
+    src="https://player.vimeo.com/video/VIDEO_ID_2?autoplay=1&muted=1&loop=1&background=1"
     allow="autoplay; fullscreen">
   </iframe>
 
   <div class="content">
-    <h1>Sehsucht</h1>
-    <p>EY - Shape the Future</p>
+    <h1>Selected Work</h1>
+    <p>Commercial · Film · VFX</p>
   </div>
 
   <div class="controls">
     <div class="button play">Pause</div>
     <div class="button sound">Sound an</div>
   </div>
+
 </section>
 
 <script src="https://player.vimeo.com/api/player.js"></script>
@@ -151,7 +158,6 @@ const players = [];
 sections.forEach(section => {
   const iframe = section.querySelector('iframe');
   const player = new Vimeo.Player(iframe);
-  players.push({ section, player });
 
   const playBtn = section.querySelector('.play');
   const soundBtn = section.querySelector('.sound');
@@ -182,6 +188,8 @@ sections.forEach(section => {
     }
     muted = !muted;
   };
+
+  players.push({ section, player });
 });
 
 /* Scroll Detection */
