@@ -229,14 +229,35 @@ const observer = new IntersectionObserver(entries => {
 
 players.forEach(p => observer.observe(p.section));
 
-/* Auto Scroll on Tap / Click */
-const sectionsArr = Array.from(sections);
-document.querySelectorAll('.scroll-trigger').forEach((trigger, index) => {
-  trigger.addEventListener('click', () => {
-    const next = sectionsArr[index + 1];
-    if (next) next.scrollIntoView({ behavior: 'smooth' });
+<script>
+let isScrolling = false;
+let currentSection = 0;
+const sectionsArr = Array.from(document.querySelectorAll('.section'));
+
+window.addEventListener('wheel', e => {
+  if (isScrolling) return;
+
+  isScrolling = true;
+
+  if (e.deltaY > 0) {
+    // Scroll DOWN
+    currentSection = Math.min(currentSection + 1, sectionsArr.length - 1);
+  } else {
+    // Scroll UP
+    currentSection = Math.max(currentSection - 1, 0);
+  }
+
+  sectionsArr[currentSection].scrollIntoView({
+    behavior: 'smooth'
   });
-});
+
+  // Cooldown (verhindert Overscroll)
+  setTimeout(() => {
+    isScrolling = false;
+  }, 900);
+}, { passive: true });
+</script>
+
 
 /* Caption Link Click */
 document.querySelectorAll('.video-caption').forEach(caption => {
