@@ -5,13 +5,23 @@
 <title>Peer Boysen – VFX & Compositing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
 <style>
 html, body {
-  margin: 0; padding: 0; height: 100%; background: #000; font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #000;
+  font-family: Arial, Helvetica, sans-serif;
 }
-body { overflow-y: scroll; scroll-snap-type: y mandatory; }
+
+body {
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
 
 /* ================= SECTIONS ================= */
+
 .section {
   position: relative;
   width: 100vw;
@@ -19,16 +29,19 @@ body { overflow-y: scroll; scroll-snap-type: y mandatory; }
   scroll-snap-align: start;
   overflow: hidden;
 }
+
+/* Vimeo Video */
 .section iframe {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   border: none;
-  pointer-events: none;
+  pointer-events: none; /* verhindert Finger-Cursor */
 }
 
-/* ================= CONTENT HEADER ================= */
+/* ================= TEXT ================= */
+
 .content {
   position: absolute;
   top: 20px;
@@ -36,21 +49,49 @@ body { overflow-y: scroll; scroll-snap-type: y mandatory; }
   z-index: 5;
   color: white;
   line-height: 1.35;
-  transition: transform 0.2s ease-out; /* Parallax Effekt */
 }
-h1 { margin:0 0 2px 0; font-size:32px; font-weight:500; }
-p, .extra-info { margin:2px 0 0; font-size:14px; opacity:0.85; white-space: pre-line; }
+
+h1 {
+  margin: 0 0 2px 0;
+  font-size: 32px;
+  font-weight: 500;
+}
+
+p, .extra-info {
+  margin: 2px 0 0;
+  font-size: 14px;
+  opacity: 0.85;
+  white-space: pre-line;
+}
 
 /* ================= VIDEO CAPTION ================= */
+
 .video-caption {
-  position: absolute; bottom: 40px; left: 30px; z-index: 5; color: white; font-size: 18px; line-height: 1.3; cursor: pointer;
+  position: absolute;
+  bottom: 40px;
+  left: 30px;
+  z-index: 5;
+  color: white;
+  font-size: 18px;
+  line-height: 1.3;
+  cursor: pointer;
 }
-.video-caption:hover { text-decoration: underline; }
+
+.video-caption:hover {
+  text-decoration: underline;
+}
 
 /* ================= CONTROLS ================= */
+
 .controls {
-  position: absolute; top: 20px; right: 20px; z-index: 6; display: flex; gap: 10px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 6;
+  display: flex;
+  gap: 10px;
 }
+
 .button {
   padding: 10px 16px;
   background: rgba(255,255,255,0.2);
@@ -61,15 +102,28 @@ p, .extra-info { margin:2px 0 0; font-size:14px; opacity:0.85; white-space: pre-
   font-size: 14px;
   backdrop-filter: blur(5px);
 }
-.button:hover { background: rgba(255,255,255,0.1); }
 
 /* ================= MOBILE ================= */
-@media (max-width: 768px){
-  .content { top:20px; left:20px; }
-  h1 { font-size:24px; }
-  p, .extra-info { font-size:12px; }
-  .button { padding:8px 12px; font-size:12px; }
-  .video-caption { bottom:20px; left:20px; font-size:12px; }
+
+@media (max-width: 768px) {
+  .content {
+    top: 20px;
+    left: 20px;
+  }
+
+  h1 { font-size: 24px; }
+  p, .extra-info { font-size: 12px; }
+
+  .button {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .video-caption {
+    bottom: 20px;
+    left: 20px;
+    font-size: 12px;
+  }
 }
 </style>
 </head>
@@ -77,107 +131,206 @@ p, .extra-info { margin:2px 0 0; font-size:14px; opacity:0.85; white-space: pre-
 <body>
 
 <!-- ================= SECTION 1 ================= -->
+
 <section class="section">
-  <iframe data-video src="https://player.vimeo.com/video/1161754912?autoplay=1&muted=1&loop=1" allow="autoplay; fullscreen"></iframe>
-  <div class="content">
-    <h1>Peer Boysen <span style="font-weight:400; font-size:16px; margin-left:15px;"><a href="about.html">About</a></span></h1>
-    <p>VFX & Compositing Artist</p>
-    <p class="extra-info">Nuke on-site and remote – contact / peerboysen@mailbox.org / +49 (0) 171 490 27 89<br>Schwenckestraße 10, 20257 Hamburg</p>
+
+  <iframe
+    data-video
+    src="https://player.vimeo.com/video/1161754912?fl=pl&fe=sh?autoplay=1&muted=1&loop=1&background=1"
+    allow="autoplay; fullscreen">
+  </iframe>
+
+<div class="content">
+  <h1>
+    Peer Boysen
+    <span style="font-weight:400; font-size:16px; margin-left:15px;">
+      <a href="about.html">About</a>
+    </span>
+  </h1>
+  <p>VFX & Compositing Artist</p>
+  <p class="extra-info">
+Nuke on-site and remote – contact /
+peerboysen@mailbox.org / +49 (0) 171 490 27 89
+Schwenckestraße 10, 20257 Hamburg
+  </p>
+</div>
+
+<div class="video-caption">
+  Compositing SHOWREEL : 2024
+</div>
+
+  <div class="controls">
+    <div class="button play">Pause</div>
+    <div class="button sound">Sound an</div>
   </div>
-  <div class="video-caption">Compositing SHOWREEL : 2024</div>
-  <div class="controls"><div class="button play">Pause</div><div class="button sound">Sound an</div></div>
+
 </section>
 
-<!-- ================= SECTION 2 ================= -->
+  <!-- ================= SECTION 2 ================= -->
+
 <section class="section">
-  <iframe data-video src="https://player.vimeo.com/video/946210855?autoplay=1&muted=1&loop=1" allow="autoplay; fullscreen"></iframe>
+
+  <iframe
+    data-video
+    src="https://player.vimeo.com/video/946210855?autoplay=1&muted=1&loop=1&background=1"
+    allow="autoplay; fullscreen">
+  </iframe>
+
   <div class="content">
-    <h1>Peer Boysen <span style="font-weight:400; font-size:16px; margin-left:15px;"><a href="about.html">About</a></span></h1>
-    <p>VFX & Compositing Artist</p>
-    <p class="extra-info">Nuke on-site and remote – contact / peerboysen@mailbox.org / +49 (0) 171 490 27 89<br>Schwenckestraße 10, 20257 Hamburg</p>
+  <h1>
+    Peer Boysen
+    <span style="font-weight:400; font-size:16px; margin-left:15px;">
+      <a href="about.html">About</a>
+    </span>
+  </h1>
+  <p>VFX & Compositing Artist</p>
+  <p class="extra-info">
+Nuke on-site and remote – contact /
+peerboysen@mailbox.org / +49 (0) 171 490 27 89
+Schwenckestraße 10, 20257 Hamburg
+  </p>
+</div>
+
+  <div class="video-caption"
+       onclick="window.open('https://infected.digital','_blank')">
+    STUDIO : INFECTED.DIGITAL – AUDI STORYTELLER
   </div>
-  <div class="video-caption" onclick="window.open('https://infected.digital','_blank')">STUDIO : INFECTED.DIGITAL – AUDI STORYTELLER</div>
-  <div class="controls"><div class="button play">Pause</div><div class="button sound">Sound an</div></div>
+
+  <div class="controls">
+    <div class="button play">Pause</div>
+    <div class="button sound">Sound an</div>
+  </div>
+
 </section>
 
 <!-- ================= SECTION 3 ================= -->
+
 <section class="section">
-  <iframe data-video src="https://player.vimeo.com/video/1047096683?autoplay=1&muted=1&loop=1" allow="autoplay; fullscreen"></iframe>
-  <div class="content">
-    <h1>Peer Boysen <span style="font-weight:400; font-size:16px; margin-left:15px;"><a href="about.html">About</a></span></h1>
-    <p>VFX & Compositing Artist</p>
-    <p class="extra-info">Nuke on-site and remote – contact / peerboysen@mailbox.org / +49 (0) 171 490 27 89<br>Schwenckestraße 10, 20257 Hamburg</p>
+
+  <iframe
+    data-video
+    src="https://player.vimeo.com/video/1047096683?autoplay=1&muted=1&loop=1&background=1"
+    allow="autoplay; fullscreen">
+  </iframe>
+
+    <div class="content">
+  <h1>
+    Peer Boysen
+    <span style="font-weight:400; font-size:16px; margin-left:15px;">
+      <a href="about.html">About</a>
+    </span>
+  </h1>
+  <p>VFX & Compositing Artist</p>
+  <p class="extra-info">
+Nuke on-site and remote – contact /
+peerboysen@mailbox.org / +49 (0) 171 490 27 89
+Schwenckestraße 10, 20257 Hamburg
+  </p>
+</div>
+
+  <div class="video-caption"
+       onclick="window.open('https://www.sehsucht.de','_blank')">
+    STUDIO : SEHSUCHT – EY SHAPE THE FUTURE
   </div>
-  <div class="video-caption" onclick="window.open('https://www.sehsucht.de','_blank')">STUDIO : SEHSUCHT – EY SHAPE THE FUTURE</div>
-  <div class="controls"><div class="button play">Pause</div><div class="button sound">Sound an</div></div>
+
+  <div class="controls">
+    <div class="button play">Pause</div>
+    <div class="button sound">Sound an</div>
+  </div>
+
 </section>
 
 <!-- ================= SCRIPTS ================= -->
+
 <script src="https://player.vimeo.com/api/player.js"></script>
+
 <script>
+/* ================= VIDEO CONTROLS ================= */
+
 const sections = document.querySelectorAll('.section');
 const players = [];
 
-/* ======== VIDEO CONTROLS ======== */
 sections.forEach(section => {
-  const iframe = section.querySelector('iframe[data-video]');
-  if(!iframe) return;
+  const iframe = section.querySelector('iframe');
   const player = new Vimeo.Player(iframe);
 
   const playBtn = section.querySelector('.play');
   const soundBtn = section.querySelector('.sound');
-  let muted=true, playing=true;
+
+  let muted = true;
+  let playing = true;
 
   player.setVolume(0);
 
-  if(playBtn) playBtn.onclick = () => {
-    if(playing){ player.pause(); playBtn.innerText="Play"; }
-    else { player.play(); playBtn.innerText="Pause"; }
+  playBtn.onclick = () => {
+    playing ? player.pause() : player.play();
+    playBtn.innerText = playing ? "Play" : "Pause";
     playing = !playing;
   };
-  if(soundBtn) soundBtn.onclick = () => {
-    if(muted){ player.setVolume(1); soundBtn.innerText="Sound aus"; }
-    else { player.setVolume(0); soundBtn.innerText="Sound an"; }
+
+  soundBtn.onclick = () => {
+    muted ? player.setVolume(1) : player.setVolume(0);
+    soundBtn.innerText = muted ? "Sound aus" : "Sound an";
     muted = !muted;
   };
 
-  players.push({section, player});
+  players.push({ section, player });
 });
 
-/* ======== AUTOPAUSE ON SCROLL ======== */
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    const item = players.find(p => p.section===entry.target);
-    if(!item) return;
-    if(entry.isIntersecting) item.player.play();
-    else { item.player.pause(); item.player.setVolume(0); }
+/* ================= AUTOPAUSE ON SCROLL ================= */
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    const item = players.find(p => p.section === entry.target);
+    if (!item) return;
+
+    if (entry.isIntersecting) {
+      item.player.play();
+    } else {
+      item.player.pause();
+      item.player.setVolume(0);
+    }
   });
-},{threshold:0.6});
-players.forEach(p=>observer.observe(p.section));
+}, { threshold: 0.6 });
 
-/* ======== SMOOTH SNAP SCROLL ======== */
-let currentIndex=0, isSnapping=false;
-window.addEventListener('wheel', e=>{
-  if(window.innerWidth<=768) return;
-  if(e.buttons===4) return;
-  if(Math.abs(e.deltaY)<40) return;
-  if(isSnapping) return;
+players.forEach(p => observer.observe(p.section));
 
-  isSnapping=true;
-  if(e.deltaY>0) currentIndex=Math.min(currentIndex+1, sections.length-1);
-  else currentIndex=Math.max(currentIndex-1,0);
+/* ================= SAFE SMOOTH WHEEL SCROLL ================= */
 
-  sections[currentIndex].scrollIntoView({behavior:'smooth', block:'start'});
-  setTimeout(()=>{isSnapping=false;},600);
-},{passive:true});
+let currentIndex = 0;
+let isSnapping = false;
 
-/* ======== PARALLAX HEADER ======== */
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  document.querySelectorAll('.content').forEach(header=>{
-    header.style.transform = `translateY(${scrollY*0.08}px)`; // Parallax Geschwindigkeit
+window.addEventListener('wheel', (e) => {
+
+  /* Mobile untouched */
+  if (window.innerWidth <= 768) return;
+
+  /* Middle click scroll erlauben */
+  if (e.buttons === 4) return;
+
+  /* Trackpad micro scroll ignorieren */
+  if (Math.abs(e.deltaY) < 40) return;
+
+  if (isSnapping) return;
+
+  isSnapping = true;
+
+  if (e.deltaY > 0) {
+    currentIndex = Math.min(currentIndex + 1, sections.length - 1);
+  } else {
+    currentIndex = Math.max(currentIndex - 1, 0);
+  }
+
+  sections[currentIndex].scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
   });
-});
+
+  setTimeout(() => {
+    isSnapping = false;
+  }, 800);
+
+}, { passive: true });
 </script>
 
 </body>
