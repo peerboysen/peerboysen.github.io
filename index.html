@@ -251,14 +251,95 @@ Schwenckestraße 10, 20257 Hamburg
 
 .video-wrapper iframe {
   position: absolute;
-  top:
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Hintergrund */
+}
 
+.video-overlay {
+  position: relative;
+  z-index: 1; /* Interaktionslayer */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 40px; /* Abstand Caption */
+}
 
-<!-- ================= SCRIPTS ================= -->
+.video-caption {
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 15px;
+}
 
-<script src="https://player.vimeo.com/api/player.js"></script>
+.controls {
+  display: flex;
+  gap: 20px;
+}
+
+.controls .button {
+  cursor: pointer;
+  padding: 8px 16px;
+  border: 1px solid rgba(255,255,255,0.5);
+  color: #fff;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: all 0.2s ease;
+}
+
+.controls .button:hover {
+  background: rgba(255,255,255,0.1);
+}
+</style>
 
 <script>
+  // YouTube IFrame API Setup
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('youtube-video', {
+      events: {
+        'onReady': function(event){
+          event.target.playVideo();
+        }
+      }
+    });
+  }
+
+  // Play / Pause
+  function toggleYouTubePlay() {
+    if(player.getPlayerState() === YT.PlayerState.PLAYING){
+      player.pauseVideo();
+      document.querySelector('.button.play').textContent = "Play";
+    } else {
+      player.playVideo();
+      document.querySelector('.button.play').textContent = "Pause";
+    }
+  }
+
+  // Sound On / Off
+  function toggleYouTubeSound() {
+    if(player.isMuted()){
+      player.unMute();
+      document.querySelector('.button.sound').textContent = "Sound aus";
+    } else {
+      player.mute();
+      document.querySelector('.button.sound').textContent = "Sound an";
+    }
+  }
+</script>
+
 /* ================= VIDEO CONTROLS ================= */
 
 const sections = document.querySelectorAll('.section');
