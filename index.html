@@ -13,19 +13,33 @@ body { overflow-y: scroll; scroll-snap-type: y mandatory; }
 
 /* ================= SECTIONS ================= */
 .section {
-  position: relative; width: 100vw; height: 100vh; scroll-snap-align: start; overflow: hidden;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  scroll-snap-align: start;
+  overflow: hidden;
 }
 .section iframe {
-  position: absolute; inset: 0; width: 100%; height: 100%; border: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  pointer-events: none;
 }
 
 /* ================= CONTENT HEADER ================= */
 .content {
-  position: absolute; top: 20px; left: 30px; z-index: 5; color: white; line-height: 1.35;
-  transition: transform 0.2s ease-out;
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  z-index: 5;
+  color: white;
+  line-height: 1.35;
+  transition: transform 0.2s ease-out; /* Parallax Effekt */
 }
-h1 { margin: 0 0 2px 0; font-size: 32px; font-weight: 500; }
-p, .extra-info { margin: 2px 0 0; font-size: 14px; opacity: 0.85; white-space: pre-line; }
+h1 { margin:0 0 2px 0; font-size:32px; font-weight:500; }
+p, .extra-info { margin:2px 0 0; font-size:14px; opacity:0.85; white-space: pre-line; }
 
 /* ================= VIDEO CAPTION ================= */
 .video-caption {
@@ -37,7 +51,16 @@ p, .extra-info { margin: 2px 0 0; font-size: 14px; opacity: 0.85; white-space: p
 .controls {
   position: absolute; top: 20px; right: 20px; z-index: 6; display: flex; gap: 10px;
 }
-.button { padding: 10px 16px; background: rgba(255,255,255,0.2); color: white; border: 1px solid white; border-radius: 4px; cursor: pointer; font-size: 14px; backdrop-filter: blur(5px); }
+.button {
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: 1px solid white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  backdrop-filter: blur(5px);
+}
 .button:hover { background: rgba(255,255,255,0.1); }
 
 /* ================= MOBILE ================= */
@@ -55,7 +78,7 @@ p, .extra-info { margin: 2px 0 0; font-size: 14px; opacity: 0.85; white-space: p
 
 <!-- ================= SECTION 1 ================= -->
 <section class="section">
-  <iframe data-video src="https://player.vimeo.com/video/1161754912?autoplay=1&loop=1&muted=1" allow="autoplay; fullscreen"></iframe>
+  <iframe data-video src="https://player.vimeo.com/video/1161754912?autoplay=1&muted=1&loop=1" allow="autoplay; fullscreen"></iframe>
   <div class="content">
     <h1>Peer Boysen <span style="font-weight:400; font-size:16px; margin-left:15px;"><a href="about.html">About</a></span></h1>
     <p>VFX & Compositing Artist</p>
@@ -67,7 +90,7 @@ p, .extra-info { margin: 2px 0 0; font-size: 14px; opacity: 0.85; white-space: p
 
 <!-- ================= SECTION 2 ================= -->
 <section class="section">
-  <iframe data-video src="https://player.vimeo.com/video/946210855?autoplay=1&loop=1&muted=1" allow="autoplay; fullscreen"></iframe>
+  <iframe data-video src="https://player.vimeo.com/video/946210855?autoplay=1&muted=1&loop=1" allow="autoplay; fullscreen"></iframe>
   <div class="content">
     <h1>Peer Boysen <span style="font-weight:400; font-size:16px; margin-left:15px;"><a href="about.html">About</a></span></h1>
     <p>VFX & Compositing Artist</p>
@@ -79,7 +102,7 @@ p, .extra-info { margin: 2px 0 0; font-size: 14px; opacity: 0.85; white-space: p
 
 <!-- ================= SECTION 3 ================= -->
 <section class="section">
-  <iframe data-video src="https://player.vimeo.com/video/1047096683?autoplay=1&loop=1&muted=1" allow="autoplay; fullscreen"></iframe>
+  <iframe data-video src="https://player.vimeo.com/video/1047096683?autoplay=1&muted=1&loop=1" allow="autoplay; fullscreen"></iframe>
   <div class="content">
     <h1>Peer Boysen <span style="font-weight:400; font-size:16px; margin-left:15px;"><a href="about.html">About</a></span></h1>
     <p>VFX & Compositing Artist</p>
@@ -91,13 +114,12 @@ p, .extra-info { margin: 2px 0 0; font-size: 14px; opacity: 0.85; white-space: p
 
 <!-- ================= SCRIPTS ================= -->
 <script src="https://player.vimeo.com/api/player.js"></script>
-
 <script>
-/* ======== VIDEO CONTROLS ======== */
 const sections = document.querySelectorAll('.section');
 const players = [];
 
-sections.forEach(section=>{
+/* ======== VIDEO CONTROLS ======== */
+sections.forEach(section => {
   const iframe = section.querySelector('iframe[data-video]');
   if(!iframe) return;
   const player = new Vimeo.Player(iframe);
@@ -108,49 +130,52 @@ sections.forEach(section=>{
 
   player.setVolume(0);
 
-  if(playBtn) playBtn.onclick=()=>{ 
-    if(playing){player.pause();playBtn.innerText="Play";}else{player.play();playBtn.innerText="Pause";} playing=!playing; 
+  if(playBtn) playBtn.onclick = () => {
+    if(playing){ player.pause(); playBtn.innerText="Play"; }
+    else { player.play(); playBtn.innerText="Pause"; }
+    playing = !playing;
   };
-  if(soundBtn) soundBtn.onclick=()=>{ 
-    if(muted){player.setVolume(1);soundBtn.innerText="Sound aus";}else{player.setVolume(0);soundBtn.innerText="Sound an";} muted=!muted; 
+  if(soundBtn) soundBtn.onclick = () => {
+    if(muted){ player.setVolume(1); soundBtn.innerText="Sound aus"; }
+    else { player.setVolume(0); soundBtn.innerText="Sound an"; }
+    muted = !muted;
   };
 
-  players.push({section,player});
+  players.push({section, player});
 });
 
 /* ======== AUTOPAUSE ON SCROLL ======== */
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
-    const item=players.find(p=>p.section===entry.target);
+    const item = players.find(p => p.section===entry.target);
     if(!item) return;
-    if(entry.isIntersecting)item.player.play();
-    else{item.player.pause();item.player.setVolume(0);}
+    if(entry.isIntersecting) item.player.play();
+    else { item.player.pause(); item.player.setVolume(0); }
   });
 },{threshold:0.6});
-
 players.forEach(p=>observer.observe(p.section));
 
 /* ======== SMOOTH SNAP SCROLL ======== */
-let currentIndex=0,isSnapping=false;
-window.addEventListener('wheel',e=>{
+let currentIndex=0, isSnapping=false;
+window.addEventListener('wheel', e=>{
   if(window.innerWidth<=768) return;
   if(e.buttons===4) return;
   if(Math.abs(e.deltaY)<40) return;
   if(isSnapping) return;
 
   isSnapping=true;
-  if(e.deltaY>0) currentIndex=Math.min(currentIndex+1,sections.length-1);
+  if(e.deltaY>0) currentIndex=Math.min(currentIndex+1, sections.length-1);
   else currentIndex=Math.max(currentIndex-1,0);
 
-  sections[currentIndex].scrollIntoView({behavior:'smooth',block:'start'});
+  sections[currentIndex].scrollIntoView({behavior:'smooth', block:'start'});
   setTimeout(()=>{isSnapping=false;},600);
 },{passive:true});
 
 /* ======== PARALLAX HEADER ======== */
-window.addEventListener('scroll',()=>{
+window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
   document.querySelectorAll('.content').forEach(header=>{
-    header.style.transform = `translateY(${scrollY*0.08}px)`; // Geschwindigkeit anpassen
+    header.style.transform = `translateY(${scrollY*0.08}px)`; // Parallax Geschwindigkeit
   });
 });
 </script>
