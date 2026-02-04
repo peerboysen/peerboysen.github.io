@@ -230,75 +230,45 @@ Schwenckestraße 10, 20257 Hamburg
 
   
 <!-- ================= SECTION 4 Youtube ================= -->
+<section class="section">
 
-  <section class="section">
-
-  <!-- Video Wrapper -->
+  <!-- Video Wrapper als Hintergrund -->
   <div class="video-wrapper">
     <iframe
+      id="youtube-video"
       src="https://www.youtube.com/embed/Pio6tB8nPIk?autoplay=1&mute=1&loop=1&playlist=Pio6tB8nPIk&controls=0&modestbranding=1&enablejsapi=1"
       frameborder="0"
       allow="autoplay; fullscreen"
-      allowfullscreen
-      id="youtube-video">
+      allowfullscreen>
     </iframe>
-  </div>
 
-  <!-- Caption -->
-  <div class="video-caption">
-    STUDIO : DELI – NIVEA CELLULAR EPIGENETICS
-  </div>
+    <!-- Overlay für Caption & Buttons -->
+    <div class="video-overlay">
+      <div class="video-caption">
+        STUDIO : DELI – NIVEA CELLULAR EPIGENETICS
+      </div>
 
-  <!-- Controls -->
-  <div class="controls">
-    <div class="button play" onclick="toggleYouTubePlay()">Pause</div>
-    <div class="button sound" onclick="toggleYouTubeSound()">Sound an</div>
+      <div class="controls">
+        <div class="button play" onclick="toggleYouTubePlay()">Pause</div>
+        <div class="button sound" onclick="toggleYouTubeSound()">Sound an</div>
+      </div>
+    </div>
   </div>
 
 </section>
 
-<script>
-  // YouTube IFrame API Setup
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+<style>
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
 
-  var player;
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('youtube-video', {
-      events: {
-        'onReady': onPlayerReady
-      }
-    });
-  }
+.video-wrapper iframe {
+  position: absolute;
+  top:
 
-  function onPlayerReady(event) {
-    event.target.playVideo();
-  }
-
-  // Pause / Play
-  function toggleYouTubePlay() {
-    if(player.getPlayerState() === YT.PlayerState.PLAYING){
-      player.pauseVideo();
-      document.querySelector('.button.play').textContent = "Play";
-    } else {
-      player.playVideo();
-      document.querySelector('.button.play').textContent = "Pause";
-    }
-  }
-
-  // Sound On / Off
-  function toggleYouTubeSound() {
-    if(player.isMuted()){
-      player.unMute();
-      document.querySelector('.button.sound').textContent = "Sound aus";
-    } else {
-      player.mute();
-      document.querySelector('.button.sound').textContent = "Sound an";
-    }
-  }
-</script>
 
 <!-- ================= SCRIPTS ================= -->
 
