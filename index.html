@@ -252,7 +252,7 @@ p, .extra-info {
 const sections = document.querySelectorAll('.section');
 const players = [];
 
-// ===== INITIALISIERE VIMEO PLAYERS UND BUTTONS =====
+// ===== INITIALISIERE VIMEO PLAYERS =====
 sections.forEach(section => {
   const iframe = section.querySelector('iframe');
   const player = new Vimeo.Player(iframe);
@@ -286,10 +286,8 @@ const firstInteraction = async () => {
   if (unlocked) return;
   unlocked = true;
 
-  // Mobile Autoscroll zur ersten Section
   if (sections[0]) sections[0].scrollIntoView({ behavior: 'smooth' });
 
-  // Alle Videos starten & Audio freischalten (Instagram/iOS fix)
   for (let { player } of players) {
     await player.play().catch(() => {});
     await player.setVolume(1).catch(() => {});
@@ -317,7 +315,7 @@ const observer = new IntersectionObserver(entries => {
 
 players.forEach(p => observer.observe(p.section));
 
-// ===== SAFE SMOOTH WHEEL SCROLL =====
+// ===== SAFE SMOOTH WHEEL SCROLL (Desktop angenehmer) =====
 let currentIndex = 0;
 let isSnapping = false;
 
@@ -335,9 +333,10 @@ window.addEventListener('wheel', (e) => {
     currentIndex = Math.max(currentIndex - 1, 0);
   }
 
+  // Längere Dauer für angenehmeres Scrollen
   sections[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-  setTimeout(() => { isSnapping = false; }, 800);
+  setTimeout(() => { isSnapping = false; }, 1200); // vorher 800ms → jetzt langsamer
 }, { passive: true });
 </script>
 
