@@ -272,8 +272,34 @@ peerboysen@mailbox.org / +49 (0) 171 490 27 89
 <script src="https://player.vimeo.com/api/player.js"></script>
 
 <script>
-/* ================= VIDEO CONTROLS ================= */
+let unlocked = false;
 
+const firstInteraction = async () => {
+  if (unlocked) return;
+  unlocked = true;
+
+  // Mobile Autoscroll zur ersten Section
+  const firstSection = sections[0];
+  if (firstSection) {
+    firstSection.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Alle Vimeo Videos starten und Audio freischalten (Mobile safe)
+  for (let { player } of players) {
+    await player.play().catch(() => {});
+    await player.setVolume(1).catch(() => {});
+  }
+
+  document.removeEventListener('touchstart', firstInteraction);
+};
+
+// Mobile-safe Touchstart Listener
+document.addEventListener('touchstart', firstInteraction, { passive: true });
+</script>
+
+
+/* ================= VIDEO CONTROLS ================= */
+<script>
 const sections = document.querySelectorAll('.section');
 const players = [];
 
