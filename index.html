@@ -160,7 +160,7 @@ p, .extra-info {
     <div class="button sound">Sound an</div>
   </div>
 </section>
-
+<!-- ================= SECTIONS ================= -->
 <section class="section">
   <iframe
     data-video
@@ -181,7 +181,7 @@ p, .extra-info {
     <div class="button sound">Sound an</div>
   </div>
 </section>
-
+<!-- ================= SECTIONS ================= -->
 <section class="section">
   <iframe
     data-video
@@ -196,7 +196,7 @@ p, .extra-info {
        onclick="window.open('https://www.sehsucht.de','_blank')">
     STUDIO : SEHSUCHT – ERNST & YOUNG SHAPE THE FUTURE
   </div>
-
+<!-- ================= SECTIONS ================= -->
   <div class="controls">
     <div class="button play">Pause</div>
     <div class="button sound">Sound an</div>
@@ -223,7 +223,7 @@ p, .extra-info {
     <div class="button sound">Sound an</div>
   </div>
 </section>
-
+<!-- ================= SECTIONS ================= -->
 <section class="section">
   <iframe
     data-video
@@ -288,10 +288,17 @@ const firstInteraction = async () => {
 
   if (sections[0]) sections[0].scrollIntoView({ behavior: 'smooth' });
 
-  for (let { player } of players) {
-    await player.play().catch(() => {});
-    await player.setVolume(1).catch(() => {});
+// Autoplay seriell für alle Sections, um Zufallsstart zu vermeiden
+for (let i = 0; i < players.length; i++) {
+  const { player } = players[i];
+  try {
+    await player.play();
+    await player.setVolume(1);
+  } catch (e) {
+    console.log("Autoplay blockiert für Section " + i);
   }
+}
+
 
   document.removeEventListener('touchstart', firstInteraction);
 };
