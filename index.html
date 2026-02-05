@@ -271,6 +271,17 @@ Schwenckestraße 10, 20257 Hamburg
 <script src="https://player.vimeo.com/api/player.js"></script>
 
 <script>
+  const iframe = document.querySelector("iframe");
+  const player = new Vimeo.Player(iframe);
+
+  const startVimeo = () => {
+    player.play().catch(() => {});
+    document.removeEventListener("touchstart", startVimeo);
+  };
+
+  document.addEventListener("touchstart", startVimeo);
+</script>
+
 /* ================= VIDEO CONTROLS ================= */
 
 const sections = document.querySelectorAll('.section');
