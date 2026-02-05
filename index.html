@@ -13,7 +13,7 @@ html, body {
   background: #000;
   font-family: Arial, Helvetica, sans-serif;
 
-  /* Smooth Scroll + Snap für Mobile & Desktop */
+  /* Smooth Scroll + Snap */
   scroll-behavior: smooth;
   scroll-snap-type: y mandatory;
   overflow-y: scroll;
@@ -128,7 +128,7 @@ p, .extra-info {
 
 <body>
 
-<!-- ================= SECTION 1 ================= -->
+<!-- ================= SECTIONS ================= -->
 <section class="section">
   <iframe
     data-video
@@ -161,7 +161,6 @@ p, .extra-info {
   </div>
 </section>
 
-<!-- ================= SECTION 2 ================= -->
 <section class="section">
   <iframe
     data-video
@@ -183,7 +182,6 @@ p, .extra-info {
   </div>
 </section>
 
-<!-- ================= SECTION 3 ================= -->
 <section class="section">
   <iframe
     data-video
@@ -205,7 +203,6 @@ p, .extra-info {
   </div>
 </section>
 
-<!-- ================= SECTION 4 ================= -->
 <section class="section">
   <iframe
     data-video
@@ -227,7 +224,6 @@ p, .extra-info {
   </div>
 </section>
 
-<!-- ================= SECTION 5 ================= -->
 <section class="section">
   <iframe
     data-video
@@ -256,7 +252,7 @@ p, .extra-info {
 const sections = document.querySelectorAll('.section');
 const players = [];
 
-// ================= INITIALISIERE VIMEO PLAYER =================
+// ===== INITIALISIERE VIMEO PLAYERS UND BUTTONS =====
 sections.forEach(section => {
   const iframe = section.querySelector('iframe');
   const player = new Vimeo.Player(iframe);
@@ -284,16 +280,16 @@ sections.forEach(section => {
   players.push({ section, player });
 });
 
-// ================= ERSTER TAP: AUTOSCROLL + MOBILE AUTOPLAY =================
+// ===== ERSTER TAP: MOBILE AUTOSCROLL + AUTOPLAY =====
 let unlocked = false;
 const firstInteraction = async () => {
   if (unlocked) return;
   unlocked = true;
 
-  // Autoscroll zur ersten Section (Mobile safe)
+  // Mobile Autoscroll zur ersten Section
   if (sections[0]) sections[0].scrollIntoView({ behavior: 'smooth' });
 
-  // Alle Videos starten & Audio freischalten (Instagram / iOS fix)
+  // Alle Videos starten & Audio freischalten (Instagram/iOS fix)
   for (let { player } of players) {
     await player.play().catch(() => {});
     await player.setVolume(1).catch(() => {});
@@ -304,7 +300,7 @@ const firstInteraction = async () => {
 
 document.addEventListener('touchstart', firstInteraction, { passive: true });
 
-// ================= AUTOPAUSE ON SCROLL =================
+// ===== AUTOPAUSE ON SCROLL =====
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     const item = players.find(p => p.section === entry.target);
@@ -321,7 +317,7 @@ const observer = new IntersectionObserver(entries => {
 
 players.forEach(p => observer.observe(p.section));
 
-// ================= SAFE SMOOTH WHEEL SCROLL =================
+// ===== SAFE SMOOTH WHEEL SCROLL =====
 let currentIndex = 0;
 let isSnapping = false;
 
@@ -332,6 +328,7 @@ window.addEventListener('wheel', (e) => {
   if (isSnapping) return;
 
   isSnapping = true;
+
   if (e.deltaY > 0) {
     currentIndex = Math.min(currentIndex + 1, sections.length - 1);
   } else {
