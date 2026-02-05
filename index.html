@@ -282,12 +282,11 @@ Schwenckestraße 10, 20257 Hamburg
   document.addEventListener("touchstart", startVimeo);
 </script>
 
-/* ================= VIDEO CONTROLS ================= */
-
 <script>
 const sections = document.querySelectorAll('.section');
 const players = [];
 
+// 1. Alle Player initialisieren
 sections.forEach(section => {
   const iframe = section.querySelector('iframe');
   const player = new Vimeo.Player(iframe);
@@ -298,14 +297,16 @@ sections.forEach(section => {
   let muted = true;
   let playing = true;
 
-  player.setVolume(0);
+  player.setVolume(0); // start muted
 
+  // Play/Pause Button
   playBtn.onclick = () => {
     playing ? player.pause() : player.play();
     playBtn.innerText = playing ? "Play" : "Pause";
     playing = !playing;
   };
 
+  // Sound Button
   soundBtn.onclick = () => {
     muted ? player.setVolume(1) : player.setVolume(0);
     soundBtn.innerText = muted ? "Sound aus" : "Sound an";
@@ -315,8 +316,31 @@ sections.forEach(section => {
   players.push({ section, player });
 });
 
-/* ================= AUTOPAUSE ON SCROLL ================= */
+// 2. Erster Tap: Autoscroll + Video starten + Audio freischalten (Mobile safe)
+let unlocked = false;
+const firstInteraction = async () => {
+  if (unlocked) return;
+  unlocked = true;
 
+  // Optional: Autoscroll zur ersten Section (z.B. Portfolio)
+  const firstSection = sections[0];
+  firstSection.scrollIntoView({ behavior: "smooth" });
+
+  // Alle Videos starten
+  for (let { player } of players) {
+    await player.play().catch(() => {});
+    await player.setVolume(1).catch(() => {}); // Audio freischalten
+  }
+
+  document.removeEventListener("touchstart", firstInteraction);
+};
+
+// Touchstart Listener (Mobile safe)
+document.addEventListener("touchstart", firstInteraction, { passive: true });
+</script>
+
+/* ================= AUTOPAUSE ON SCROLL ================= */
+<script>
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     const item = players.find(p => p.section === entry.target);
