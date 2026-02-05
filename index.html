@@ -151,7 +151,7 @@ p, .extra-info {
   <p class="extra-info">
 Nuke on-site and remote – contact /
 peerboysen@mailbox.org / +49 (0) 171 490 27 89
-Schwenckestraße 10, 20257 Hamburg
+20257 Hamburg
   </p>
 </div>
 
@@ -204,7 +204,7 @@ Schwenckestraße 10, 20257 Hamburg
 
     <span style="font-weight:600; font-size:20px; margin-left:15px;">
       <a href="about.html">About</a>
-      
+
   <div class="video-caption"
        onclick="window.open('https://www.sehsucht.de','_blank')">
     STUDIO : SEHSUCHT – ERNST & YOUNG SHAPE THE FUTURE
@@ -233,6 +233,7 @@ Schwenckestraße 10, 20257 Hamburg
   </span>
   <div class="video-caption"
        onclick="window.open('https://infected.digital','_blank')">
+    STUDIO : INFECTED.DIGITAL – VW ID CODE
     STUDIO : INFECTED.DIGITAL – VOLKSWAGEN ID CODE
     </div>
 
@@ -243,7 +244,7 @@ Schwenckestraße 10, 20257 Hamburg
 
 </section>
 
-  
+
 <section class="section">
 
   <iframe
@@ -254,7 +255,7 @@ Schwenckestraße 10, 20257 Hamburg
 
     <span style="font-weight:600; font-size:20px; margin-left:15px;">
       <a href="about.html">About</a>
-      
+
   <div class="video-caption"
        onclick="window.open('https://www.sehsucht.de','_blank')">
     STUDIO : SEHSUCHT - ADELHOLZNER ALPENQUELLE
@@ -271,22 +272,11 @@ Schwenckestraße 10, 20257 Hamburg
 <script src="https://player.vimeo.com/api/player.js"></script>
 
 <script>
-  const iframe = document.querySelector("iframe");
-  const player = new Vimeo.Player(iframe);
+/* ================= VIDEO CONTROLS ================= */
 
-  const startVimeo = () => {
-    player.play().catch(() => {});
-    document.removeEventListener("touchstart", startVimeo);
-  };
-
-  document.addEventListener("touchstart", startVimeo);
-</script>
-
-<script>
 const sections = document.querySelectorAll('.section');
 const players = [];
 
-// 1. Alle Player initialisieren
 sections.forEach(section => {
   const iframe = section.querySelector('iframe');
   const player = new Vimeo.Player(iframe);
@@ -297,16 +287,14 @@ sections.forEach(section => {
   let muted = true;
   let playing = true;
 
-  player.setVolume(0); // start muted
+  player.setVolume(0);
 
-  // Play/Pause Button
   playBtn.onclick = () => {
     playing ? player.pause() : player.play();
     playBtn.innerText = playing ? "Play" : "Pause";
     playing = !playing;
   };
 
-  // Sound Button
   soundBtn.onclick = () => {
     muted ? player.setVolume(1) : player.setVolume(0);
     soundBtn.innerText = muted ? "Sound aus" : "Sound an";
@@ -316,31 +304,8 @@ sections.forEach(section => {
   players.push({ section, player });
 });
 
-// 2. Erster Tap: Autoscroll + Video starten + Audio freischalten (Mobile safe)
-let unlocked = false;
-const firstInteraction = async () => {
-  if (unlocked) return;
-  unlocked = true;
-
-  // Optional: Autoscroll zur ersten Section (z.B. Portfolio)
-  const firstSection = sections[0];
-  firstSection.scrollIntoView({ behavior: "smooth" });
-
-  // Alle Videos starten
-  for (let { player } of players) {
-    await player.play().catch(() => {});
-    await player.setVolume(1).catch(() => {}); // Audio freischalten
-  }
-
-  document.removeEventListener("touchstart", firstInteraction);
-};
-
-// Touchstart Listener (Mobile safe)
-document.addEventListener("touchstart", firstInteraction, { passive: true });
-</script>
-
 /* ================= AUTOPAUSE ON SCROLL ================= */
-<script>
+
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     const item = players.find(p => p.section === entry.target);
