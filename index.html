@@ -5,7 +5,6 @@
 <title>Peer Boysen – VFX & Compositing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
 <style>
 html, body {
   margin: 0;
@@ -13,15 +12,18 @@ html, body {
   height: 100%;
   background: #000;
   font-family: Arial, Helvetica, sans-serif;
+
+  /* Smooth Scroll + Snap für Mobile & Desktop */
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
 }
 
 body {
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
+  overscroll-behavior: contain;
 }
 
 /* ================= SECTIONS ================= */
-
 .section {
   position: relative;
   width: 100vw;
@@ -37,11 +39,10 @@ body {
   width: 100%;
   height: 100%;
   border: none;
-  pointer-events: none; /* verhindert Finger-Cursor */
+  pointer-events: none;
 }
 
 /* ================= TEXT ================= */
-
 .content {
   position: absolute;
   top: 20px;
@@ -65,7 +66,6 @@ p, .extra-info {
 }
 
 /* ================= VIDEO CAPTION ================= */
-
 .video-caption {
   position: absolute;
   bottom: 40px;
@@ -82,7 +82,6 @@ p, .extra-info {
 }
 
 /* ================= CONTROLS ================= */
-
 .controls {
   position: absolute;
   top: 20px;
@@ -104,7 +103,6 @@ p, .extra-info {
 }
 
 /* ================= MOBILE ================= */
-
 @media (max-width: 768px) {
   .content {
     top: 20px;
@@ -131,45 +129,40 @@ p, .extra-info {
 <body>
 
 <!-- ================= SECTION 1 ================= -->
-
 <section class="section">
-
   <iframe
     data-video
     src="https://player.vimeo.com/video/1161754912?fl=pl&fe=sh?autoplay=1&muted=1&loop=1&background=1"
     allow="autoplay; fullscreen">
   </iframe>
 
-<div class="content">
-  <h1>
-    Peer Boysen
-    <span style="font-weight:600; font-size:20px; margin-left:15px;">
-      <a href="about.html">About</a>
-    </span>
-  </h1>
-  <p>VFX & Compositing Artist</p>
-  <p class="extra-info">
-Nuke on-site and remote – contact /
-peerboysen@mailbox.org / +49 (0) 171 490 27 89
-20257 Hamburg
-  </p>
-</div>
+  <div class="content">
+    <h1>
+      Peer Boysen
+      <span style="font-weight:600; font-size:20px; margin-left:15px;">
+        <a href="about.html">About</a>
+      </span>
+    </h1>
+    <p>VFX & Compositing Artist</p>
+    <p class="extra-info">
+      Nuke on-site and remote – contact /
+      peerboysen@mailbox.org / +49 (0) 171 490 27 89
+      Schwenckestraße 10, 20257 Hamburg
+    </p>
+  </div>
 
-<div class="video-caption">
-  Compositing SHOWREEL : 2024
-</div>
+  <div class="video-caption">
+    Compositing SHOWREEL : 2024
+  </div>
 
   <div class="controls">
     <div class="button play">Pause</div>
     <div class="button sound">Sound an</div>
   </div>
-
 </section>
 
-  <!-- ================= SECTION 2 ================= -->
-
+<!-- ================= SECTION 2 ================= -->
 <section class="section">
-
   <iframe
     data-video
     src="https://player.vimeo.com/video/946210855?autoplay=1&muted=1&loop=1&background=1"
@@ -177,8 +170,7 @@ peerboysen@mailbox.org / +49 (0) 171 490 27 89
   </iframe>
 
   <span style="font-weight:600; font-size:20px; margin-left:15px;">
-      <a href="about.html">About</a>
-
+    <a href="about.html">About</a>
   </span>
   <div class="video-caption"
        onclick="window.open('https://infected.digital','_blank')">
@@ -189,22 +181,19 @@ peerboysen@mailbox.org / +49 (0) 171 490 27 89
     <div class="button play">Pause</div>
     <div class="button sound">Sound an</div>
   </div>
-
 </section>
 
 <!-- ================= SECTION 3 ================= -->
-
 <section class="section">
-
   <iframe
     data-video
     src="https://player.vimeo.com/video/1047096683?autoplay=1&muted=1&loop=1&background=1"
     allow="autoplay; fullscreen">
   </iframe>
 
-    <span style="font-weight:600; font-size:20px; margin-left:15px;">
-      <a href="about.html">About</a>
-
+  <span style="font-weight:600; font-size:20px; margin-left:15px;">
+    <a href="about.html">About</a>
+  </span>
   <div class="video-caption"
        onclick="window.open('https://www.sehsucht.de','_blank')">
     STUDIO : SEHSUCHT – ERNST & YOUNG SHAPE THE FUTURE
@@ -214,13 +203,10 @@ peerboysen@mailbox.org / +49 (0) 171 490 27 89
     <div class="button play">Pause</div>
     <div class="button sound">Sound an</div>
   </div>
-
 </section>
 
-   <!-- ================= SECTION 4 ================= -->
-
+<!-- ================= SECTION 4 ================= -->
 <section class="section">
-
   <iframe
     data-video
     src="https://player.vimeo.com/video/958387410?fl=pl&fe=sh?autoplay=1&muted=1&loop=1&background=1"
@@ -228,33 +214,30 @@ peerboysen@mailbox.org / +49 (0) 171 490 27 89
   </iframe>
 
   <span style="font-weight:600; font-size:20px; margin-left:15px;">
-      <a href="about.html">About</a>
-
+    <a href="about.html">About</a>
   </span>
   <div class="video-caption"
        onclick="window.open('https://infected.digital','_blank')">
     STUDIO : INFECTED.DIGITAL – VOLKSWAGEN ID CODE
-    </div>
+  </div>
 
   <div class="controls">
     <div class="button play">Pause</div>
     <div class="button sound">Sound an</div>
   </div>
-
 </section>
 
-
+<!-- ================= SECTION 5 ================= -->
 <section class="section">
-
   <iframe
     data-video
     src="https://player.vimeo.com/video/1161896347?fl=pl&fe=sh?autoplay=1&muted=1&loop=1&background=1"
     allow="autoplay; fullscreen">
   </iframe>
 
-    <span style="font-weight:600; font-size:20px; margin-left:15px;">
-      <a href="about.html">About</a>
-
+  <span style="font-weight:600; font-size:20px; margin-left:15px;">
+    <a href="about.html">About</a>
+  </span>
   <div class="video-caption"
        onclick="window.open('https://www.sehsucht.de','_blank')">
     STUDIO : SEHSUCHT - ADELHOLZNER ALPENQUELLE
@@ -264,17 +247,16 @@ peerboysen@mailbox.org / +49 (0) 171 490 27 89
     <div class="button play">Pause</div>
     <div class="button sound">Sound an</div>
   </div>
-
 </section>
-<!-- ================= SCRIPTS ================= -->
 
+<!-- ================= SCRIPTS ================= -->
 <script src="https://player.vimeo.com/api/player.js"></script>
 
-/* ================= VIDEO CONTROLS ================= */
 <script>
 const sections = document.querySelectorAll('.section');
 const players = [];
 
+// ================= INITIALISIERE VIMEO PLAYER =================
 sections.forEach(section => {
   const iframe = section.querySelector('iframe');
   const player = new Vimeo.Player(iframe);
@@ -285,7 +267,7 @@ sections.forEach(section => {
   let muted = true;
   let playing = true;
 
-  player.setVolume(0);
+  player.setVolume(0); // start muted
 
   playBtn.onclick = () => {
     playing ? player.pause() : player.play();
@@ -302,8 +284,27 @@ sections.forEach(section => {
   players.push({ section, player });
 });
 
-/* ================= AUTOPAUSE ON SCROLL ================= */
+// ================= ERSTER TAP: AUTOSCROLL + MOBILE AUTOPLAY =================
+let unlocked = false;
+const firstInteraction = async () => {
+  if (unlocked) return;
+  unlocked = true;
 
+  // Autoscroll zur ersten Section (Mobile safe)
+  if (sections[0]) sections[0].scrollIntoView({ behavior: 'smooth' });
+
+  // Alle Videos starten & Audio freischalten (Instagram / iOS fix)
+  for (let { player } of players) {
+    await player.play().catch(() => {});
+    await player.setVolume(1).catch(() => {});
+  }
+
+  document.removeEventListener('touchstart', firstInteraction);
+};
+
+document.addEventListener('touchstart', firstInteraction, { passive: true });
+
+// ================= AUTOPAUSE ON SCROLL =================
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     const item = players.find(p => p.section === entry.target);
@@ -320,41 +321,26 @@ const observer = new IntersectionObserver(entries => {
 
 players.forEach(p => observer.observe(p.section));
 
-/* ================= SAFE SMOOTH WHEEL SCROLL ================= */
-
+// ================= SAFE SMOOTH WHEEL SCROLL =================
 let currentIndex = 0;
 let isSnapping = false;
 
 window.addEventListener('wheel', (e) => {
-
-  /* Mobile untouched */
   if (window.innerWidth <= 768) return;
-
-  /* Middle click scroll erlauben */
   if (e.buttons === 4) return;
-
-  /* Trackpad micro scroll ignorieren */
   if (Math.abs(e.deltaY) < 40) return;
-
   if (isSnapping) return;
 
   isSnapping = true;
-
   if (e.deltaY > 0) {
     currentIndex = Math.min(currentIndex + 1, sections.length - 1);
   } else {
     currentIndex = Math.max(currentIndex - 1, 0);
   }
 
-  sections[currentIndex].scrollIntoView({
-    behavior: 'smooth',
-    block: 'start'
-  });
+  sections[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-  setTimeout(() => {
-    isSnapping = false;
-  }, 800);
-
+  setTimeout(() => { isSnapping = false; }, 800);
 }, { passive: true });
 </script>
 
