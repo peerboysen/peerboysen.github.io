@@ -267,9 +267,9 @@ Schwenckestraße 10, 20257 Hamburg
 
 </section>
 <!-- ================= SCRIPTS ================= -->
-  <!-- Vimeo API -->
+
 <script src="https://player.vimeo.com/api/player.js"></script>
-  <!-- Vimeo Play after touch -->
+
 <script>
   const iframe = document.querySelector("iframe");
   const player = new Vimeo.Player(iframe);
@@ -282,27 +282,9 @@ Schwenckestraße 10, 20257 Hamburg
   document.addEventListener("touchstart", startVimeo);
 </script>
 
- <!-- Autoscroll after first touch -->
-  <script>
-    let autoScrolled = false;
-
-    const autoScroll = () => {
-      if (autoScrolled) return;
-      autoScrolled = true;
-
-      document
-        .getElementById("portfolio")
-        .scrollIntoView({ behavior: "smooth" });
-
-      document.removeEventListener("touchstart", autoScroll);
-    };
-
-    document.addEventListener("touchstart", autoScroll, { passive: true });
-  </script>
-
-  
 /* ================= VIDEO CONTROLS ================= */
 
+<script>
 const sections = document.querySelectorAll('.section');
 const players = [];
 
