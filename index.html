@@ -329,7 +329,7 @@ let isSnapping = false;
 window.addEventListener('wheel', (e) => {
   if (window.innerWidth <= 768) return;
   if (e.buttons === 4) return;
-  if (Math.abs(e.deltaY) < 40) return;
+  if (Math.abs(e.deltaY) < 90) return;
   if (isSnapping) return;
 
   isSnapping = true;
